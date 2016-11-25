@@ -36,19 +36,21 @@ public class GameFrame extends JInternalFrame implements ActionListener {
 		super("Active Game", true, true);
 
 		buttons = new ArrayList<JButton>();
-		Integer[] startingLights = randomNumbers();
+		Set<Integer> startingLights = randomNumbers();
 
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(rowCount, colCount, 5, 5));
+
+		// Create all the buttons and select 5 of them at random to be the
+		// starting 5 lit up buttons
 		for (int i = 0; i < (rowCount * colCount); i++) {
-			if (startingLights.toString().contains(i + "")) {
+			if (startingLights.contains(new Integer(i))) {
 				createButton(i + "", true);
 			} else {
 				createButton(i + "", false);
 			}
-
 		}
-
+		// Add all the buttons to the panel
 		for (JButton button : buttons) {
 			mainPanel.add(button);
 		}
@@ -99,7 +101,6 @@ public class GameFrame extends JInternalFrame implements ActionListener {
 		}
 		if (gameWinner()) {
 			System.out.println("You Win!");
-
 			try {
 				BufferedImage img = ImageIO.read(new File(IMG_PATH));
 				ImageIcon icon = new ImageIcon(img);
@@ -149,15 +150,14 @@ public class GameFrame extends JInternalFrame implements ActionListener {
 	 * Method to generate unique random numbers between 0 and 24, this will be
 	 * used to define the starting pattern of lights for the game
 	 * 
-	 * @return Integer[] containing 5 unique random numbers between 0 and 24
+	 * @return Set<Integer> containing 5 unique random numbers between 0 and 24
 	 */
-	private Integer[] randomNumbers() {
+	private Set<Integer> randomNumbers() {
 		Set<Integer> s = new HashSet<>();
 		while (s.size() != 5) {
-			s.add((int) (Math.random() * 24));
+			s.add((int) (Math.random() * 25));
 		}
-		Integer[] array = s.toArray(new Integer[s.size()]);
-		return array;
+		return s;
 	}
 
 }
