@@ -86,7 +86,7 @@ public class GameFrame extends JInternalFrame implements ActionListener {
 	 */
 	public synchronized void actionPerformed(ActionEvent e) {
 		int buttonPressed = Integer.parseInt(e.getActionCommand());
-		// System.out.println(buttonPressed);
+		//System.out.println(buttonPressed);
 		for (JButton button : buttons) {
 			// Toggle the button that was pressed plus the button directly
 			// above, below, to the left and to the right of it. Also includes
