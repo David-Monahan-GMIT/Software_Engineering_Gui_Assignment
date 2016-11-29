@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.TreeMap;
 
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -22,7 +23,8 @@ public class MainWindow extends JFrame {
 	// reference for manipulating multiple document interface
 	private JDesktopPane desktop;
 
-	Action newGameAction, exitAction;
+	private TreeMap<Integer, String> highScores;
+	Action newGameAction, exitAction, highScoreAction;
 	
 	public MainWindow() {
 		super("Lights Out Game");
@@ -51,11 +53,14 @@ public class MainWindow extends JFrame {
 		fileMenu.setMnemonic('F');
 		
 		newGameAction = new NewGameAction();
+		highScoreAction = new HighScoresAction();
 		exitAction = new ExitAction();
 		
 		toolBar.add(newGameAction);
+		toolBar.add(highScoreAction);
 		
 		fileMenu.add(newGameAction);
+		fileMenu.add(highScoreAction);
 		fileMenu.add(exitAction);
 		
 
@@ -86,7 +91,7 @@ public class MainWindow extends JFrame {
 		Dimension dimension = toolkit.getScreenSize();
 
 		// center window on screen
-		setBounds(100, 100, dimension.width - 1000, dimension.height - 400);
+		setBounds(100, 100, dimension.width - 200, dimension.height - 100);
 
 		setVisible(true);
 		
@@ -121,15 +126,31 @@ public class MainWindow extends JFrame {
 			GameFrame frame = new GameFrame();
 			desktop.add(frame);
 			frame.setVisible(true);
-			
-/*			AddressBookEntryFrame entryFrame = createAddressBookEntryFrame();
+		}
 
-			// set new AddressBookEntry in window
-			entryFrame.setAddressBookEntry(new AddressBookEntry());
+	} // end inner class NewAction
+	
+	private class HighScoresAction extends AbstractAction {
 
-			// display window
-			desktop.add(entryFrame);
-			entryFrame.setVisible(true);*/
+		// set up action's name, icon, descriptions and mnemonic
+		public HighScoresAction() {
+			putValue(NAME, "High Scores");
+			putValue(SMALL_ICON, new ImageIcon(getClass().getResource("images/New24.png")));
+			putValue(SHORT_DESCRIPTION, "High Scores");
+			putValue(LONG_DESCRIPTION, "Show all the High Scores");
+			putValue(MNEMONIC_KEY, new Integer('H'));
+		}
+
+		// display window in which user can input entry
+		public void actionPerformed(ActionEvent e) {
+			// create new internal window
+			highScores = new TreeMap<Integer, String>();
+			for(int i=20; i >0; i--) {
+				highScores.put(i,"THIS"+i+"NAME");
+			}
+			InfoFrame frame = new InfoFrame("High Scores", highScores);
+			desktop.add(frame);
+			frame.setVisible(true);
 		}
 
 	} // end inner class NewAction
