@@ -1,0 +1,32 @@
+How to play:
+
+Gameplay:
+The game consists of a 5 by 5 grid of lights. When the game starts,
+a random number of these lights is switched on. Pressing any of the 
+lights will toggle it and the four adjacent lights. The goal of the 
+puzzle is to switch all the lights off, preferably in as few button 
+presses as possible.
+
+How to Win:
+
+Firstly not all grid permutations are solvable.
+Light chasing:
+"Light chasing" is a method similar to Gaussian elimination which always 
+solves the puzzle (if a solution exists), although with the possibility 
+of many redundant steps.In this approach, rows are manipulated one at a 
+time starting with the top row. All the lights are disabled in the row 
+by toggling the adjacent lights in the row directly below. The same method 
+is then used on the consecutive rows up to the last one. The last row is solved 
+separately, depending on its active lights. Corresponding lights (see table below) 
+in the top row are toggled and the initial algorithm is run again, resulting
+in a solution.
+
+Bottom row 	Top row
+O---O 	OO---
+-O-O- 	O--O-
+OOO-- 	-O---
+--OOO 	---O-
+O-OO- 	----O
+-OO-O 	O----
+OO-OO 	--O--
+

@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
 	private JDesktopPane desktop;
 
 	private TreeMap<Integer, String> highScores;
-	Action newGameAction, exitAction, highScoreAction;
+	Action newGameAction, exitAction, highScoreAction, helpScreenAction;
 	
 	public MainWindow() {
 		super("Lights Out Game");
@@ -54,13 +54,16 @@ public class MainWindow extends JFrame {
 		
 		newGameAction = new NewGameAction();
 		highScoreAction = new HighScoresAction();
+		helpScreenAction = new HelpScreenAction();
 		exitAction = new ExitAction();
 		
 		toolBar.add(newGameAction);
 		toolBar.add(highScoreAction);
+		toolBar.add(helpScreenAction);
 		
 		fileMenu.add(newGameAction);
 		fileMenu.add(highScoreAction);
+		fileMenu.add(helpScreenAction);
 		fileMenu.add(exitAction);
 		
 
@@ -148,7 +151,28 @@ public class MainWindow extends JFrame {
 			for(int i=20; i >0; i--) {
 				highScores.put(i,"THIS"+i+"NAME");
 			}
-			InfoFrame frame = new InfoFrame("High Scores", highScores);
+			HighScoreFrame frame = new HighScoreFrame("High Scores", highScores);
+			desktop.add(frame);
+			frame.setVisible(true);
+		}
+
+	} // end inner class NewAction
+
+	private class HelpScreenAction extends AbstractAction {
+
+		// set up action's name, icon, descriptions and mnemonic
+		public HelpScreenAction() {
+			putValue(NAME, "Help");
+			putValue(SMALL_ICON, new ImageIcon(getClass().getResource("images/New24.png")));
+			putValue(SHORT_DESCRIPTION, "Help");
+			putValue(LONG_DESCRIPTION, "Show how to play the game");
+			putValue(MNEMONIC_KEY, new Integer('H'));
+		}
+
+		// display window in which user can input entry
+		public void actionPerformed(ActionEvent e) {
+			// create new internal window
+			HelpFrame frame = new HelpFrame();
 			desktop.add(frame);
 			frame.setVisible(true);
 		}
